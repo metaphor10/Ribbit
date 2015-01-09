@@ -2,7 +2,10 @@ package com.software.arielb.ribbit;
 
 import java.util.Locale;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -29,6 +32,26 @@ import com.parse.ParseUser;
  */
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     public static final String TAG=MainActivity.class.getSimpleName();
+    public static final int TAKE_PHOTO_REQUEST=0;
+    public static final int TAKE_VIDEO_REQUEST=1;
+    public static final int PICK_PHOTO_REQUEST=2;
+    public static final int PICK_VIDEO_REQUEST=3;
+    protected DialogInterface.OnClickListener mDialogListener= new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch(which){
+                case 0:
+                        Intent takePhotoIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePhotoIntent,TAKE_PHOTO_REQUEST);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+            }
+        }
+    };
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -116,15 +139,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch(id){
+            case R.id.action_logout:
+                ParseUser.logOut();
+                navigateToLogin();
+            case R.id.action_edit_friends:
+                Intent intent=new Intent(this, EditFriendsActivity.class);
+                startActivity(intent);
+            case R.id.action_camera:
+                AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                builder.setItems(R.array.camera_choices,mDialogListener);
+                AlertDialog dialog=builder.create();
+                dialog.show();
+
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            ParseUser.logOut();
-            navigateToLogin();
+
 
         }else if (id==R.id.action_edit_friends){
-            Intent intent=new Intent(this, EditFriendsActivity.class);
-            startActivity(intent);
+
         }
 
         return super.onOptionsItemSelected(item);
