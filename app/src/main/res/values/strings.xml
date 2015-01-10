@@ -31,11 +31,15 @@
     <string name="video_file_size_warnning">The selected video must be less then 10 mb</string>
     <string name="error_opening_file">There was a problem with accessing the file</string>
     <string name="error_file_size_to_long">File is to big</string>
+
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>
         <item>Choose Picture</item>
         <item>Choose Video</item>
     </string-array>
+
+    <string name="title_activity_recipients">Choose Recipients</string>
+    <string name="friend_list_empty">Choose some friends first</string>
 
 </resources>
