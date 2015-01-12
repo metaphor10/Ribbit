@@ -41,5 +41,10 @@
 
     <string name="title_activity_recipients">Choose Recipients</string>
     <string name="friend_list_empty">Choose some friends first</string>
+    <string name="action_send_label">Send</string>
+    <string name="error_selecting_file">There was an error with the file selected please select a different file</string>
+    <string name="error_selecting_file_title">Were sorry</string>
+    <string name="success_message">Message sent</string>
+    <string name="error_send_message">There was an error sending your message please try again</string>
 
 </resources>

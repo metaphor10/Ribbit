@@ -257,8 +257,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }else {
                 Intent mediaScanFile = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 mediaScanFile.setData(mMediaUri);
+                String fileType;
+                if(requestCode==PICK_PHOTO_REQUEST||requestCode==TAKE_PHOTO_REQUEST){
+                        fileType=ParseConstants.TYPE_IMAGE;
+                }else {
+                        fileType=ParseConstants.TYPE_VIDEO;
+                }
+                mediaScanFile.putExtra(ParseConstants.KEY_FILE_TYPE,fileType);
                 sendBroadcast(mediaScanFile);
             }
+            Intent recipientsIntent=new Intent(this,RecipientsActivity.class);
+            recipientsIntent.setData(mMediaUri);
+            startActivity(recipientsIntent);
         }else if(resultCode!=RESULT_CANCELED){
                Toast.makeText(this,getString(R.string.general_error),Toast.LENGTH_LONG).show();
         }
