@@ -63,6 +63,7 @@ public class RecipientsActivity extends ActionBarActivity {
         });
 
         mMediaUri=getIntent().getData();
+
         mFileType=getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
     }
    @Override

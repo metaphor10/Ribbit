@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
@@ -32,10 +33,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /**
@@ -54,6 +60,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public static final int FILE_SIZE_LIMIT=1024*1024*10;//10 megabytes
 
     protected Uri mMediaUri;
+
     protected DialogInterface.OnClickListener mDialogListener= new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -218,6 +225,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -257,17 +266,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }else {
                 Intent mediaScanFile = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 mediaScanFile.setData(mMediaUri);
-                String fileType;
-                if(requestCode==PICK_PHOTO_REQUEST||requestCode==TAKE_PHOTO_REQUEST){
-                        fileType=ParseConstants.TYPE_IMAGE;
-                }else {
-                        fileType=ParseConstants.TYPE_VIDEO;
-                }
-                mediaScanFile.putExtra(ParseConstants.KEY_FILE_TYPE,fileType);
                 sendBroadcast(mediaScanFile);
             }
             Intent recipientsIntent=new Intent(this,RecipientsActivity.class);
             recipientsIntent.setData(mMediaUri);
+            String fileType;
+            if(requestCode==PICK_PHOTO_REQUEST||requestCode==TAKE_PHOTO_REQUEST){
+                fileType=ParseConstants.TYPE_IMAGE;
+            }else {
+                fileType=ParseConstants.TYPE_VIDEO;
+            }
+            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE,fileType);
             startActivity(recipientsIntent);
         }else if(resultCode!=RESULT_CANCELED){
                Toast.makeText(this,getString(R.string.general_error),Toast.LENGTH_LONG).show();
