@@ -7,6 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class ViewImageActivity extends ActionBarActivity {
 
@@ -16,15 +21,18 @@ public class ViewImageActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_image);
         ImageView imageView=(ImageView) findViewById(R.id.imageView);
         Uri imageUri=getIntent().getData();
+        Picasso.with(this).load(imageUri.toString()).into(imageView);
+        Timer timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },10*1000);
+
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_image, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -34,9 +42,7 @@ public class ViewImageActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

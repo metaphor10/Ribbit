@@ -36,13 +36,13 @@ public class FriendsFragment extends ListFragment {
         super.onResume();
         mCurrentUser = ParseUser.getCurrentUser();
         mFriendsRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDS_RELATION);
-        getActivity().setProgressBarIndeterminateVisibility(true);
+       // getActivity().setProgressBarIndeterminateVisibility(true);
         ParseQuery<ParseUser> query=mFriendsRelation.getQuery();
         query.addAscendingOrder(ParseConstants.KEY_USERNAME);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> friends, ParseException e) {
-                getActivity().setProgressBarIndeterminateVisibility(false);
+                //getActivity().setProgressBarIndeterminateVisibility(false);
                 if(e==null) {
                     mFriends = friends;
                     String[] usernames = new String[mFriends.size()];
